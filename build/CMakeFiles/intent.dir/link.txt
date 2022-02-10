@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc libintent.a CMakeFiles/intent.dir/src/intent.cpp.obj
-C:\MinGW\bin\ranlib.exe libintent.a

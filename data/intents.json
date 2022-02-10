@@ -1,0 +1,21 @@
+[
+    {
+      "name": "Get weather",
+      "parameters": [
+        "location",
+        "time"
+      ]
+    },
+    {
+      "name": "Get fact",
+      "parameters": [
+        "topic"
+      ],
+      "keywords": [
+          "fact",
+          "interesting fact",
+          "something interesting",
+          "details"
+      ]
+    }
+]

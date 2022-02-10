@@ -1,0 +1,3 @@
+What is the weather like today?
+What is the weather like in Paris today?
+Tell me an interesting fact.
