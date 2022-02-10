@@ -1,0 +1,5 @@
+C:/Users/frederik/Documents/github/embeddedIntentRecognizer/build/CMakeFiles/intent.dir
+C:/Users/frederik/Documents/github/embeddedIntentRecognizer/build/CMakeFiles/main.dir
+C:/Users/frederik/Documents/github/embeddedIntentRecognizer/build/CMakeFiles/tests.dir
+C:/Users/frederik/Documents/github/embeddedIntentRecognizer/build/CMakeFiles/edit_cache.dir
+C:/Users/frederik/Documents/github/embeddedIntentRecognizer/build/CMakeFiles/rebuild_cache.dir
