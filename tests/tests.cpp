@@ -11,7 +11,9 @@ SCENARIO("An intent can be created and the name can be read")
     GIVEN("An arbitrary intent")
     {
         string name = "Get weather";
-        Intent* intent = new Intent(name, "GET_WEATHER", "The user wants to know the current weather at his location");
+        vector<string> keywords = {"weather", "rain"};
+        vector<string> entities = {"city", "time"};
+        Intent* intent = new Intent(name, keywords, entities);
 
         THEN("The name should be returned properly")
         {
