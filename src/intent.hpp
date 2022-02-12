@@ -1,3 +1,4 @@
+#include <map>
 #include <string>
 #include <vector>
 using namespace std;
@@ -7,10 +8,12 @@ class Intent {
         string name_;
         vector<string> keywords_;
         vector<string> entities_;
+        bool matchesInput_ = false;
 
     public:
         Intent(string name, vector<string> keywords, vector<string> entities);
 
         string getName();
-        Intent* checkMatch(string userInput);
+        Intent* matchKeywords(string userInput);
+        string matchEntity(string userInput, map<string, vector<string>>* entityValues);
 };

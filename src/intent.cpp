@@ -1,6 +1,5 @@
 #include "intent.hpp"
 
-
 /*-----------------------------------------------------------------------------------------------*
  * Constructs an Intent object that holds its parameters and can compare it to user input
  *-----------------------------------------------------------------------------------------------*/
@@ -22,7 +21,7 @@ string Intent::getName()
 /*-----------------------------------------------------------------------------------------------*
  * Takes the user input and checks if it contains a string that matches the intents keyword list
  *-----------------------------------------------------------------------------------------------*/
-Intent* Intent::checkMatch(string userInput)
+Intent* Intent::matchKeywords(string userInput)
 {
   /* Iterate over the intents keywords and match it with the user input -------------------------*/
   for (string keyword : this->keywords_)
@@ -36,4 +35,37 @@ Intent* Intent::checkMatch(string userInput)
 
   /* If the keyword does not match, return nullptr ----------------------------------------------*/
   return nullptr;
+}
+
+/*-----------------------------------------------------------------------------------------------*
+ * Looks for matching entities in the user input string if at least one keyword matches
+ *-----------------------------------------------------------------------------------------------*/
+string Intent::matchEntity(string userInput, map<string, vector<string>>* entityValues)
+{
+  string entitiesFound = " ";
+  int iFound = 0;
+
+  /* Iterate over the intents entities and the entities keywords --------------------------------*/
+  for (string entity : this->entities_)
+  {
+    for (string entityKey : (*entityValues)[entity])
+    {
+      /* If the entities keywords are present in the user input string, return its category -----*/
+      if (userInput.find(entityKey) != string::npos)
+      {
+        entitiesFound.append(entity).append(", ");
+        iFound++;
+        break;
+      }
+    }
+  }
+
+  /* Return an empty string if nothing has been found -------------------------------------------*/
+  if (!iFound)
+  {
+    return "";
+  }
+
+  /* Remove the trailing comma and space and return result --------------------------------------*/
+  return entitiesFound.substr(0, entitiesFound.length() - 2);
 }

@@ -1,0 +1,3 @@
+Get weather;weather,rain,sun,snow,storm,wind,wet,dry,orcan;time,location
+Get fact;fact,info,detail,something about,interesting;topic
+Get directions;direction,navi,bring,locat,where;location
