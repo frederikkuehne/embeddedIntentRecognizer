@@ -6,7 +6,7 @@
 
 using namespace std;
 
-SCENARIO("An intent can be created and the name can be read") 
+SCENARIO("An intent can be created and the name can be read and the user input can be identified") 
 {
     GIVEN("An arbitrary intent")
     {
@@ -18,6 +18,7 @@ SCENARIO("An intent can be created and the name can be read")
         THEN("The name should be returned properly")
         {
             REQUIRE(intent->getName() == name);
+            REQUIRE(intent->matchKeywords("How is the weather?") == intent);
         }
     }
 }

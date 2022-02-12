@@ -44,8 +44,6 @@ add_executable(tests tests/tests.cpp)
 target_include_directories(tests
     PRIVATE src)
 
-message(${VARIAB})
-
 # Link the "Catch-2"-library to the tests target
 target_link_libraries(tests
     Catch
