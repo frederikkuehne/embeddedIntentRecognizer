@@ -1,3 +1,6 @@
+#ifndef INTENT_H
+#define INTENT_H
+
 #include <map>
 #include <string>
 #include <vector>
@@ -17,3 +20,5 @@ class Intent {
         Intent* matchKeywords(string userInput);
         string matchEntity(string userInput, map<string, vector<string>>* entityValues);
 };
+
+#endif

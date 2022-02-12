@@ -21,9 +21,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Add intent object as library
 add_library(intent src/intent.cpp src/intent.hpp)
 
-target_include_directories(intent
-    PUBLIC src
-)
+# Add data handler as library
+add_library(handle_data src/handle_data.cpp src/handle_data.hpp)
 
 # Add the main executable
 add_executable(recognize src/main.cpp)
@@ -31,6 +30,7 @@ add_executable(recognize src/main.cpp)
 # Link intent object to main executable
 target_link_libraries(recognize
     PRIVATE intent
+    PRIVATE handle_data
 )
 
 
@@ -41,6 +41,10 @@ add_library(Catch INTERFACE)
 
 # Add the tests source as an executable
 add_executable(tests tests/tests.cpp)
+target_include_directories(tests
+    PRIVATE src)
+
+message(${VARIAB})
 
 # Link the "Catch-2"-library to the tests target
 target_link_libraries(tests
