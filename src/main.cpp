@@ -10,19 +10,29 @@ void populateIntents(vector<Intent*>* intents);
 void parseLine(string line, string* intentName, vector<string>* keywords, vector<string>* entities);
 Intent* getIntent(vector<Intent*>* intents, string userInput);
 
-int main()
+/*-----------------------------------------------------------------------------------------------*
+ * Program entry point. Uses the first argument as user input and prints results to console
+ *-----------------------------------------------------------------------------------------------*/
+int main(int argc, char *argv[])
 {
-    string userInput;
+
+    /* This application expects exactly one input: The user input string ------------------------*/
+    if (argc != 2)
+    {
+        cout << "Usage" << endl;
+        cout << argv[0] << " <Input string to extract the intent from>" << endl;
+        return 0;
+    }
+
+    string userInput = argv[1];
     vector<Intent*> intents;
     Intent* guessedIntent;
 
+    /* Parses the list of intents to Intent objects from default path ---------------------------*/
     populateIntents(&intents);
 
-    cout << "What can I do for you?" << endl;
-    getline(cin, userInput);
-
+    /* Returns the Intent that fits the most to the user input and prints its name to console ---*/
     guessedIntent = getIntent(&intents, userInput);
-
     cout << guessedIntent->getName();
 
     return 0;

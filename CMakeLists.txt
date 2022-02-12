@@ -26,10 +26,10 @@ target_include_directories(intent
 )
 
 # Add the main executable
-add_executable(main src/main.cpp)
+add_executable(recognize src/main.cpp)
 
 # Link intent object to main executable
-target_link_libraries(main
+target_link_libraries(recognize
     PRIVATE intent
 )
 
