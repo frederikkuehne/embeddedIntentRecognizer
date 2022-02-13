@@ -17,7 +17,7 @@ class Intent {
         Intent(string name, vector<string> keywords, vector<string> entities);
 
         string getName();
-        Intent* matchKeywords(string userInput);
+        bool matchKeywords(string userInput);
         string matchEntity(string userInput, map<string, vector<string>>* entityValues);
 };
 

@@ -9,7 +9,7 @@
 void populateIntents(vector<Intent*>* intents, vector<string>* allEntities)
 {
     /* Create input file stream and open intent source line by line -----------------------------*/
-    ifstream intentSrc("./../data/intents");
+    ifstream intentSrc(INTENTS_SRC);
     string intentName, line;
     vector<string> keywords, entities;
 
@@ -28,14 +28,12 @@ void populateIntents(vector<Intent*>* intents, vector<string>* allEntities)
  *-----------------------------------------------------------------------------------------------*/
 void populateEntities(vector<string>* allEntities, map<string, vector<string>>* entityValues)
 {
-    int iEntity;
     string line;
-    map<string, vector<string>> entityValuess;
 
-    for (iEntity = 0; iEntity < allEntities->size(); iEntity++)
+    for (int iEntity = 0; iEntity < allEntities->size(); iEntity++)
     {
         vector<string> entityValue;
-        ifstream entitySrc("./../data/" + allEntities->at(iEntity));
+        ifstream entitySrc(DATA_FOLDER + allEntities->at(iEntity));
         while (getline(entitySrc, line))
         {
             entityValue.push_back(line);
@@ -45,7 +43,7 @@ void populateEntities(vector<string>* allEntities, map<string, vector<string>>* 
 }
 
 /*-----------------------------------------------------------------------------------------------*
- * Takes a line from the predefined intents file and extracts the parameters
+ * Takes a line from the strictly predefined intents file and extracts the parameters
  *-----------------------------------------------------------------------------------------------*/
 void parseIntentLine(
     string line,

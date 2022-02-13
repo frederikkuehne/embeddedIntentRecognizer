@@ -6,6 +6,8 @@
 #include <vector>
 #include "intent.hpp"
 
+#define DATA_FOLDER "./../data/"
+#define INTENTS_SRC DATA_FOLDER "intents"
 #define MAIN_DELIMITER ";"
 #define SUB_DELIMITER ","
 

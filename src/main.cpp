@@ -72,7 +72,7 @@ Intent* getMatchingIntent(vector<Intent*>* intents, string userInput)
     /* Iterate over all intents to compare them with the user input -----------------------------*/
     for (;iIntent < intents->size(); iIntent++)
     {
-        if (intents->at(iIntent)->matchKeywords(userInput) != nullptr)
+        if (intents->at(iIntent)->matchKeywords(userInput))
         {
             return intents->at(iIntent);
         }

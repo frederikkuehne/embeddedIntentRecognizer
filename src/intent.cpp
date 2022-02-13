@@ -21,20 +21,17 @@ string Intent::getName()
 /*-----------------------------------------------------------------------------------------------*
  * Takes the user input and checks if it contains a string that matches the intents keyword list
  *-----------------------------------------------------------------------------------------------*/
-Intent* Intent::matchKeywords(string userInput)
+bool Intent::matchKeywords(string userInput)
 {
   /* Iterate over the intents keywords and match it with the user input -------------------------*/
   for (string keyword : this->keywords_)
   {
-    /* If the keyword is found in the users input, return the intent object ---------------------*/
-    if (userInput.find(keyword) != string::npos)
-    {
-      return this;
-    }
+    /* If the keyword is found in the users input, return the intent object ---------------------*/#
+    return (userInput.find(keyword) != string::npos);
   }
 
   /* If the keyword does not match, return nullptr ----------------------------------------------*/
-  return nullptr;
+  return false;
 }
 
 /*-----------------------------------------------------------------------------------------------*
