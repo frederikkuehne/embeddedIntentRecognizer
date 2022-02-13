@@ -25,7 +25,7 @@ add_library(intent src/intent.cpp src/intent.hpp)
 add_library(handle_data src/handle_data.cpp src/handle_data.hpp)
 
 # Add the main executable
-add_executable(recognize src/main.cpp)
+add_executable(recognize src/main.cpp src/main.hpp)
 
 # Link intent object to main executable
 target_link_libraries(recognize
@@ -47,5 +47,6 @@ target_include_directories(tests
 # Link the "Catch-2"-library to the tests target
 target_link_libraries(tests
     Catch
+    handle_data
     intent
 )

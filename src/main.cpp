@@ -1,22 +1,20 @@
 #include <map>
 #include <iostream>
-#include <string>
-#include <vector>
 #include <algorithm>
 
 #include "handle_data.hpp"
 #include "intent.hpp"
+#include "main.hpp"
 
 using namespace std;
 
-
-Intent* getMatchingIntent(vector<Intent*>* intents, string userInput);
 
 /*-----------------------------------------------------------------------------------------------*
  * Program entry point. Uses the first argument as user input and prints results to console
  *-----------------------------------------------------------------------------------------------*/
 int main(int argc, char *argv[])
 {
+    int iErrors;
     vector<Intent*> intents;
     Intent* guessedIntent;
     string guessedEntity;
@@ -37,10 +35,18 @@ int main(int argc, char *argv[])
     [](unsigned char c){ return tolower(c); });
 
     /* Parses the list of intents to Intent objects from default path ---------------------------*/
-    populateIntents(&intents, &allEntities);
+    if(!populateIntents(&intents, &allEntities))
+    {
+        cout << "Could not parse intents from location " INTENTS_SRC "." << endl;;
+    }
 
     /* Gathers all possible entity types and loads the corresponding keywords -------------------*/
-    populateEntities(&allEntities, &entityValues);
+    iErrors = populateEntities(&allEntities, &entityValues);
+    if (iErrors)
+    {
+        cout << "Did not find " << iErrors << " of the entity files in folder " DATA_FOLDER "." 
+        << endl;
+    }
 
     /* Returns the Intent that fits the most to the user input and prints its name to console ---*/
     guessedIntent = getMatchingIntent(&intents, userInput);
@@ -67,10 +73,8 @@ int main(int argc, char *argv[])
  *-----------------------------------------------------------------------------------------------*/
 Intent* getMatchingIntent(vector<Intent*>* intents, string userInput)
 {
-    int iIntent = 0;
-
     /* Iterate over all intents to compare them with the user input -----------------------------*/
-    for (;iIntent < intents->size(); iIntent++)
+    for (int iIntent = 0;iIntent < intents->size(); iIntent++)
     {
         if (intents->at(iIntent)->matchKeywords(userInput))
         {

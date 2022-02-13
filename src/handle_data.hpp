@@ -11,8 +11,8 @@
 #define MAIN_DELIMITER ";"
 #define SUB_DELIMITER ","
 
-void populateIntents(vector<Intent*>* intents, vector<string>* allEntities);
-void populateEntities(vector<string>* allEntities, map<string, vector<string>>* entityValues);
-void parseIntentLine(string line, string* intentName, vector<string>* keywords, vector<string>* entities, vector<string>* allEntities);
+bool populateIntents(vector<Intent*>* intents, vector<string>* allEntities);
+int populateEntities(vector<string>* allEntities, map<string, vector<string>>* entityValues);
+bool parseIntentLine(string line, string* intentName, vector<string>* keywords, vector<string>* entities, vector<string>* allEntities);
 
 #endif

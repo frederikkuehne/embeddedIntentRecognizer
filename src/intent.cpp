@@ -5,6 +5,15 @@
  *-----------------------------------------------------------------------------------------------*/
 Intent::Intent(string name, vector<string> keywords, vector<string> entities)
 {
+  if (name.empty())
+  {
+    throw invalid_argument("The intents name cannot be empty.");
+  }
+  if (keywords.empty())
+  {
+    throw invalid_argument("The keywords list cannot be empty.");
+  }
+  
   this->name_ = name;
   this->keywords_ = keywords;
   this->entities_ = entities;

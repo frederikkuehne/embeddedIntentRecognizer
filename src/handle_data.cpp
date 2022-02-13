@@ -6,12 +6,17 @@
 /*-----------------------------------------------------------------------------------------------*
  * Scans the intents source file for intents and populates them into Intent objects
  *-----------------------------------------------------------------------------------------------*/
-void populateIntents(vector<Intent*>* intents, vector<string>* allEntities)
+bool populateIntents(vector<Intent*>* intents, vector<string>* allEntities)
 {
     /* Create input file stream and open intent source line by line -----------------------------*/
     ifstream intentSrc(INTENTS_SRC);
     string intentName, line;
     vector<string> keywords, entities;
+
+    if (!intentSrc.is_open())
+    {
+        return false;
+    }
 
     /* Extract an intent and create an Intent object for every valid line -----------------------*/
     while (getline(intentSrc, line))
@@ -21,22 +26,38 @@ void populateIntents(vector<Intent*>* intents, vector<string>* allEntities)
         keywords.clear();
         entities.clear();
     }
+
+    return true;
 }
 
 /*-----------------------------------------------------------------------------------------------*
  * Scans Intents for all entity names and populates an entity list with keywords
  *-----------------------------------------------------------------------------------------------*/
-void populateEntities(vector<string>* allEntities, map<string, vector<string>>* entityValues)
+int populateEntities(vector<string>* allEntities, map<string, vector<string>>* entityValues)
 {
     string line;
+    int iError = 0;
 
+    /* Loop over all entities names to get their sets of keys from its file ---------------------*/
     for (int iEntity = 0; iEntity < allEntities->size(); iEntity++)
     {
         vector<string> entityValue;
         ifstream entitySrc(DATA_FOLDER + allEntities->at(iEntity));
+
+        /* Check if the entities associated file could be opened --------------------------------*/
+        if (!entitySrc.is_open())
+        {
+            iError++;
+            continue;
+        }
+
+        /* Each line represents an entity key. It is pushed into the vector held by the map -----*/ 
         while (getline(entitySrc, line))
         {
-            entityValue.push_back(line);
+            if(!line.empty())
+            {
+                entityValue.push_back(line);
+            }
         }
         (*entityValues)[allEntities->at(iEntity)] = entityValue;
     }
@@ -45,7 +66,7 @@ void populateEntities(vector<string>* allEntities, map<string, vector<string>>* 
 /*-----------------------------------------------------------------------------------------------*
  * Takes a line from the strictly predefined intents file and extracts the parameters
  *-----------------------------------------------------------------------------------------------*/
-void parseIntentLine(
+bool parseIntentLine(
     string line,
     string* intentName, 
     vector<string>* keywords, 
@@ -67,7 +88,11 @@ void parseIntentLine(
     /* Iterate over all the keywords and push them into the keyword list ------------------------*/
     while (pos_sub_end = subLine.find(SUB_DELIMITER, pos_sub_start))
     {
-        keywords->push_back(subLine.substr(pos_sub_start, pos_sub_end - pos_sub_start));
+        string tmp = subLine.substr(pos_sub_start, pos_sub_end - pos_sub_start);
+        if (!tmp.empty())
+        {
+            keywords->push_back(tmp);
+        }
         pos_sub_start = pos_sub_end + 1;
         if (pos_sub_end == string::npos)
         {
@@ -83,12 +108,15 @@ void parseIntentLine(
     /* Iterate over all the entities and push them into the entity list -------------------------*/
     while (pos_sub_end = subLine.find(SUB_DELIMITER, pos_sub_start))
     {
-        entity = subLine.substr(pos_sub_start, pos_sub_end - pos_sub_start);
-        entities->push_back(entity);
+        if(entity = subLine.substr(pos_sub_start, pos_sub_end - pos_sub_start), !entity.empty());
+        {
+            entities->push_back(entity);
+        }
         pos_sub_start = pos_sub_end + 1;
 
         /* Check if this entity is already present in the list of all entities ------------------*/
-        if (find(allEntities->begin(), allEntities->end(), entity) == allEntities->end())
+        if (!entity.empty() && 
+            find(allEntities->begin(), allEntities->end(), entity) == allEntities->end())
         {
             allEntities->push_back(entity);
         }
