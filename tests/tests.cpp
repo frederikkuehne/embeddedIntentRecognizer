@@ -9,17 +9,17 @@ TEST_CASE("Test intent functionality", "[intent]")
 {
     string name = "Get weather";
     vector<string> keywords = {"weather", "rain"};
-    vector<string> entities = {"location", "time"};
+    vector<string> entities = {"City", "Time"};
     Intent* intent = new Intent(name, keywords, entities);
     map<string, vector<string>> entityValues;
     populateEntities(&entities, &entityValues);
 
     REQUIRE(intent->getName() == name);
     REQUIRE(intent->matchKeywords("How is the weather?"));
-    REQUIRE(intent->matchEntity("How is the weather today?", &entityValues) == " time");
+    REQUIRE(intent->matchEntity("How is the weather today?", &entityValues) == " Time");
 }
 
-TEST_CASE("Test example user input 1", "[user-input-1]")
+TEST_CASE("Test example user input 1 using source files", "[user-input-1]")
 {
     vector<Intent*> intents;
     Intent* guessedIntent;
@@ -32,11 +32,11 @@ TEST_CASE("Test example user input 1", "[user-input-1]")
     guessedIntent = getMatchingIntent(&intents, "what is the weather like today?");
     guessedEntity = guessedIntent->matchEntity("what is the weather like today?", &entityValues);
 
-    REQUIRE(guessedIntent->getName() == "Get weather");
-    REQUIRE(guessedEntity == " time");
+    REQUIRE(guessedIntent->getName() == "Get Weather");
+    REQUIRE(guessedEntity == " Time");
 }
 
-TEST_CASE("Test example user input 2", "[user-input-2]")
+TEST_CASE("Test example user input 2 using source files", "[user-input-2]")
 {
     vector<Intent*> intents;
     Intent* guessedIntent;
@@ -49,11 +49,11 @@ TEST_CASE("Test example user input 2", "[user-input-2]")
     guessedIntent = getMatchingIntent(&intents, "what is the weather like in paris today?");
     guessedEntity = guessedIntent->matchEntity("what is the weather like in paris today?", &entityValues);
 
-    REQUIRE(guessedIntent->getName() == "Get weather");
-    REQUIRE(guessedEntity == " time, location");
+    REQUIRE(guessedIntent->getName() == "Get Weather");
+    REQUIRE(guessedEntity == " Time, City");
 }
 
-TEST_CASE("Test example user input 3", "[user-input-3]")
+TEST_CASE("Test example user input 3 using source files", "[user-input-3]")
 {
     vector<Intent*> intents;
     Intent* guessedIntent;
@@ -66,6 +66,6 @@ TEST_CASE("Test example user input 3", "[user-input-3]")
     guessedIntent = getMatchingIntent(&intents, "tell me an interesting fact.");
     guessedEntity = guessedIntent->matchEntity("tell me an interesting fact.", &entityValues);
 
-    REQUIRE(guessedIntent->getName() == "Get fact");
+    REQUIRE(guessedIntent->getName() == "Get Fact");
     REQUIRE(guessedEntity == "");
 }
