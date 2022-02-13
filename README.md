@@ -7,9 +7,9 @@ This method was chosen above e.g. neural networks because normally an intent rec
 ## Usage
 Intents are stored in the file './data/intents' in the form of
 ```
-[intent];[keyword,...];[entity,...]
+[intent];[intent keyword,...];[entity name,...]
 ```
-and loaded at runtime. Entity keywords are stored in files with the name of the entity in the folder './data/'.
+while every line represents an intent. Every line starts with the name of the intent and is seperated with a semicolon to the next field, which contains intent keywords, each seperated by a comma. The last field contains entity names, also each of them seperated by a comma. The corresponding entity keywords are stored in files with the filename equal to the name of the entity in the folder './data/'.
 Call the recognize executable and pass your question as an argument like described in the following:
 
 ```
