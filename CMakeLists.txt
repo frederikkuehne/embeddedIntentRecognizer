@@ -1,7 +1,7 @@
 ### MAIN PARAMETERS ###
 
 # Define minimum required version of cmake
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 # Define project properties
 project(
@@ -40,13 +40,22 @@ target_link_libraries(recognize
 add_library(Catch INTERFACE)
 
 # Add the tests source as an executable
+add_library(tests_main STATIC tests/catch_main.cpp)
 add_executable(tests tests/tests.cpp)
-target_include_directories(tests
-    PRIVATE src)
+
+# Precompile cacth header
+target_compile_definitions(tests PRIVATE CATCH_CONFIG_FAST_COMPILE
+	CATCH_CONFIG_DISABLE_MATCHERS)
+target_precompile_headers(tests
+    PRIVATE tests/catch.hpp)
 
 # Link the "Catch-2"-library to the tests target
 target_link_libraries(tests
+    tests_main
     Catch
     handle_data
     intent
 )
+
+target_include_directories(tests
+    PRIVATE src)

@@ -61,6 +61,8 @@ int populateEntities(vector<string>* allEntities, map<string, vector<string>>* e
         }
         (*entityValues)[allEntities->at(iEntity)] = entityValue;
     }
+
+    return iError;
 }
 
 /*-----------------------------------------------------------------------------------------------*
@@ -78,11 +80,19 @@ bool parseIntentLine(
 
     /* Extract the intents name -----------------------------------------------------------------*/
     pos_end = line.find(MAIN_DELIMITER, pos_start);
+    if(pos_end == string::npos)
+    {
+        return false;
+    }
     *intentName = line.substr(pos_start, pos_end);
 
     /* Extract the intents keywords -------------------------------------------------------------*/
     pos_start = pos_end + 1;
     pos_end = line.find(MAIN_DELIMITER, pos_start);
+    if(pos_end == string::npos)
+    {
+        return false;
+    }
     subLine = line.substr(pos_start, pos_end - pos_start);
 
     /* Iterate over all the keywords and push them into the keyword list ------------------------*/
@@ -126,6 +136,8 @@ bool parseIntentLine(
             break;
         }
     }
+    
+    return true;
 }
 
 /*-----------------------------------------------------------------------------------------------*

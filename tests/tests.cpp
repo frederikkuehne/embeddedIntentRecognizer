@@ -1,5 +1,3 @@
-/* Creates a catch2 main function as entry point ------------------------------------------------*/
-#define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
 #include "intent.hpp"
@@ -7,43 +5,67 @@
 
 using namespace std;
 
-/* Tests of the function getMatchingIntent() ----------------------------------------------------*/
-TEST_CASE("The function getMatchingIntent() returns the expected values", "[main]")
-{
-    string userInput = "";
-    vector<Intent*>* intents;
-
-    REQUIRE(getMatchingIntent(intents, userInput) == nullptr);
-
-    intents->push_back(new Intent("", {""}, {""}));
-    intents->push_back(new Intent("Get weather", {"weather"}, {"location"}));
-    intents->push_back(new Intent("Get fact", {"fact"}, {""}));
-    
-    REQUIRE(getMatchingIntent(intents, userInput) == nullptr);
-
-    userInput = "Tell me the weather";
-    REQUIRE(getMatchingIntent(intents, userInput) == intents->at(0));
-
-    userInput = "Tell me a fact";
-    REQUIRE(getMatchingIntent(intents, userInput) == intents->at(1));
-}
-
-
-/* Test of the function populateIntents() -------------------------------------------------------*/
-TEST_CASE("The intents can be populated properly", "[handle_data]")
-{
-    vector<Intent*>* intents;
-}
-
-
-TEST_CASE("An intent can be created and the name can be read and the user input can be identified")
+TEST_CASE("Test intent functionality", "[intent]")
 {
     string name = "Get weather";
     vector<string> keywords = {"weather", "rain"};
     vector<string> entities = {"location", "time"};
     Intent* intent = new Intent(name, keywords, entities);
+    map<string, vector<string>> entityValues;
+    populateEntities(&entities, &entityValues);
 
     REQUIRE(intent->getName() == name);
     REQUIRE(intent->matchKeywords("How is the weather?"));
+    REQUIRE(intent->matchEntity("How is the weather today?", &entityValues) == " time");
+}
 
+TEST_CASE("Test example user input 1", "[user-input-1]")
+{
+    vector<Intent*> intents;
+    Intent* guessedIntent;
+    string guessedEntity;
+    vector<string> allEntities;
+    map<string, vector<string>> entityValues;
+    
+    populateIntents(&intents, &allEntities);
+    populateEntities(&allEntities, &entityValues);
+    guessedIntent = getMatchingIntent(&intents, "what is the weather like today?");
+    guessedEntity = guessedIntent->matchEntity("what is the weather like today?", &entityValues);
+
+    REQUIRE(guessedIntent->getName() == "Get weather");
+    REQUIRE(guessedEntity == " time");
+}
+
+TEST_CASE("Test example user input 2", "[user-input-2]")
+{
+    vector<Intent*> intents;
+    Intent* guessedIntent;
+    string guessedEntity;
+    vector<string> allEntities;
+    map<string, vector<string>> entityValues;
+    
+    populateIntents(&intents, &allEntities);
+    populateEntities(&allEntities, &entityValues);
+    guessedIntent = getMatchingIntent(&intents, "what is the weather like in paris today?");
+    guessedEntity = guessedIntent->matchEntity("what is the weather like in paris today?", &entityValues);
+
+    REQUIRE(guessedIntent->getName() == "Get weather");
+    REQUIRE(guessedEntity == " time, location");
+}
+
+TEST_CASE("Test example user input 3", "[user-input-3]")
+{
+    vector<Intent*> intents;
+    Intent* guessedIntent;
+    string guessedEntity;
+    vector<string> allEntities;
+    map<string, vector<string>> entityValues;
+    
+    populateIntents(&intents, &allEntities);
+    populateEntities(&allEntities, &entityValues);
+    guessedIntent = getMatchingIntent(&intents, "tell me an interesting fact.");
+    guessedEntity = guessedIntent->matchEntity("tell me an interesting fact.", &entityValues);
+
+    REQUIRE(guessedIntent->getName() == "Get fact");
+    REQUIRE(guessedEntity == "");
 }

@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     iErrors = populateEntities(&allEntities, &entityValues);
     if (iErrors)
     {
-        cout << "Did not find " << iErrors << " of the entity files in folder " DATA_FOLDER "." 
+        cout << "Did not find " << iErrors << " of the entity files in folder " DATA_FOLDER "."
         << endl;
     }
 
