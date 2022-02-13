@@ -2,11 +2,8 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-#include <string>
-
 #include "intent.hpp"
 #include "handle_data.hpp"
-#include "main.hpp"
 
 using namespace std;
 

@@ -14,5 +14,6 @@
 bool populateIntents(vector<Intent*>* intents, vector<string>* allEntities);
 int populateEntities(vector<string>* allEntities, map<string, vector<string>>* entityValues);
 bool parseIntentLine(string line, string* intentName, vector<string>* keywords, vector<string>* entities, vector<string>* allEntities);
+Intent* getMatchingIntent(vector<Intent*>* intents, std::string userInput);
 
 #endif

@@ -127,3 +127,21 @@ bool parseIntentLine(
         }
     }
 }
+
+/*-----------------------------------------------------------------------------------------------*
+ * Feeds the user input to all Intents in order for them to find out if it matches
+ *-----------------------------------------------------------------------------------------------*/
+Intent* getMatchingIntent(vector<Intent*>* intents, string userInput)
+{
+    /* Iterate over all intents to compare them with the user input -----------------------------*/
+    for (int iIntent = 0;iIntent < intents->size(); iIntent++)
+    {
+        if (intents->at(iIntent)->matchKeywords(userInput))
+        {
+            return intents->at(iIntent);
+        }
+    }
+
+    /* No intent did match the user input -------------------------------------------------------*/
+    return nullptr;
+}

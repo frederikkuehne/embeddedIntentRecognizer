@@ -25,7 +25,7 @@ add_library(intent src/intent.cpp src/intent.hpp)
 add_library(handle_data src/handle_data.cpp src/handle_data.hpp)
 
 # Add the main executable
-add_executable(recognize src/main.cpp src/main.hpp)
+add_executable(recognize src/main.cpp)
 
 # Link intent object to main executable
 target_link_libraries(recognize

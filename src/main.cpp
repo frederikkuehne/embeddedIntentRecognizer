@@ -1,10 +1,11 @@
 #include <map>
+#include <string>
+#include <vector>
 #include <iostream>
 #include <algorithm>
 
 #include "handle_data.hpp"
 #include "intent.hpp"
-#include "main.hpp"
 
 using namespace std;
 
@@ -65,23 +66,4 @@ int main(int argc, char *argv[])
     cout << "Intent: " << guessedIntent->getName() << guessedEntity << endl;
 
     return 0;
-}
-
-
-/*-----------------------------------------------------------------------------------------------*
- * Feeds the user input to all Intents in order for them to find out if it matches
- *-----------------------------------------------------------------------------------------------*/
-Intent* getMatchingIntent(vector<Intent*>* intents, string userInput)
-{
-    /* Iterate over all intents to compare them with the user input -----------------------------*/
-    for (int iIntent = 0;iIntent < intents->size(); iIntent++)
-    {
-        if (intents->at(iIntent)->matchKeywords(userInput))
-        {
-            return intents->at(iIntent);
-        }
-    }
-
-    /* No intent did match the user input -------------------------------------------------------*/
-    return nullptr;
 }
